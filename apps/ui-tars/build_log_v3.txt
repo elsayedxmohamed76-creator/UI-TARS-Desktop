@@ -1,0 +1,139 @@
+
+> ui-tars-desktop@0.2.4 build C:\Users\Mohamed\Desktop\UI-TARS-desktop-0.3.0\UI-TARS-desktop-0.3.0\apps\ui-tars
+> npm run clean && npm run typecheck && cross-env NODE_ENV=production electron-vite build && electron-forge make --enable-logging
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 clean
+> rimraf dist out
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck
+> npm run typecheck:node && npm run typecheck:web
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck:node
+> tsc --noEmit -p tsconfig.node.json --pretty --composite false
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck:web
+> tsc --noEmit -p tsconfig.web.json --pretty --composite false
+
+[36mvite v6.2.2 [32mbuilding SSR bundle for production...[36m[39m
+transforming...
+../../node_modules/file-type/core.js (1419:16): Use of eval in "../../node_modules/file-type/core.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+[32mÔ£ô[39m 2368 modules transformed.
+Generated an empty chunk: "app_private".
+rendering chunks...
+[2mdist/main/[22m[36mapp_private-Dyvby5gX.js                [39m[1m[2m    0.01 kB[22m[1m[22m
+[2mdist/main/[22m[36mindex-CtsU6c2f.js                      [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/main/[22m[36mBrowserWebSocketTransport-D0cjxDeU.js  [39m[1m[2m    0.94 kB[22m[1m[22m
+[2mdist/main/[22m[36mfileFromPath-1g7i6PBK.js               [39m[1m[2m    4.66 kB[22m[1m[22m
+[2mdist/main/[22m[36msource-map-support-D6d8GHBV.js         [39m[1m[2m   18.99 kB[22m[1m[22m
+[2mdist/main/[22m[36mindex-D7bHkL9b.js                      [39m[1m[2m   20.76 kB[22m[1m[22m
+[2mdist/main/[22m[36msystemPermissions-AHXYQjon.js          [39m[1m[2m  102.59 kB[22m[1m[22m
+[2mdist/main/[22m[36mindex-8DzgTOz1.js                      [39m[1m[2m  282.25 kB[22m[1m[22m
+[2mdist/main/[22m[36mbidi-9VA-E60H.js                       [39m[1m[33m  603.55 kB[39m[22m
+[2mdist/main/[22m[36mmain.js                                [39m[1m[33m6,920.18 kB[39m[22m
+[32mÔ£ô built in 8.89s[39m
+[36mvite v6.2.2 [32mbuilding SSR bundle for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 1 modules transformed.
+rendering chunks...
+[2mdist/preload/[22m[36mindex.js  [39m[1m[2m2.02 kB[22m[1m[22m
+[32mÔ£ô built in 29ms[39m
+[36mvite v6.2.2 [32mbuilding for production...[36m[39m
+transforming...
+../../node_modules/jimp/dist/browser/index.js (14227:17): Use of eval in "../../node_modules/jimp/dist/browser/index.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+[32mÔ£ô[39m 3141 modules transformed.
+rendering chunks...
+[2m../../dist/renderer/[22m[32mindex.html                        [39m[1m[2m  2.41 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[32massets/logo-vector-CP5aW3mm.png   [39m[1m[2m  9.41 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[32massets/logo-full-B6EiVkjG.png     [39m[1m[2m 17.28 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[32massets/browser_use-2PrvbQnO.png   [39m[1m[2m105.95 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[32massets/computer_use-CD1sF1u8.png  [39m[1m[2m106.92 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[35massets/index-yUkL4doP.css         [39m[1m[2m  0.18 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[35massets/main-CQFxiS4l.css          [39m[1m[2m 75.18 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/index-D44-asig.js          [39m[1m[2m  0.72 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/local-DDfYQCwc.js          [39m[1m[2m  0.83 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/index-mayad4JD.js          [39m[1m[2m  3.59 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/actions-BUlhMXyU.js        [39m[1m[2m  5.05 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/index-DCKperFz.js          [39m[1m[2m  5.32 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/index-Ct3wQRcI.js          [39m[1m[2m 13.75 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/free-89Rw5-y0.js           [39m[1m[2m 30.26 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/index-p6vMY8H8.js          [39m[1m[2m274.29 kB[22m[1m[22m
+[2m../../dist/renderer/[22m[36massets/main-fBemAiyx.js           [39m[1m[33m582.93 kB[39m[22m
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[32mÔ£ô built in 4.73s[39m
+[33mÔØ»[39m Checking your system
+[33mÔØ»[39m Checking node version
+[33mÔØ»[39m Checking package manager version
+[32mÔ£ö[39m Found node@24.13.1
+[32mÔ£ö[39m Found pnpm@9.10.0
+[32mÔ£ö[39m Checking your system
+[?25h[33mÔØ»[39m Loading configuration
+keepModules [ '@computer-use/node-mac-permissions', 'sharp', 'jose' ]
+needSubDependencies [ '@computer-use/node-mac-permissions', 'sharp' ]
+ignorePattern /^\/node_modules\/(?!@computer-use\/node-mac-permissions|sharp|jose|@computer-use\/libnut-win32|@computer-use\/mac-screen-capture-permissions)/
+[32mÔ£ö[39m Loading configuration
+[33mÔØ»[39m Resolving make targets
+ÔÇ║ Making for the following targets: 
+[32mÔ£ö[39m Resolving make targets
+[33mÔØ»[39m Running package command
+[33mÔØ»[39m Preparing to package application
+[32mÔ£ö[39m Preparing to package application
+[33mÔØ»[39m Running packaging hooks
+[33mÔØ»[39m Running generateAssets hook
+[32mÔ£ö[39m Running generateAssets hook
+[33mÔØ»[39m Running prePackage hook
+[32mÔ£ö[39m Running prePackage hook
+[32mÔ£ö[39m Running packaging hooks
+[33mÔØ»[39m Packaging application
+ÔÇ║ Determining targets...
+[33mÔØ»[39m Packaging for x64 on win32
+[33mÔØ»[39m Copying files
+[33mÔØ»[39m Preparing native dependencies
+[33mÔØ»[39m Finalizing package
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+[32mÔ£ö[39m Copying files
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+[32mÔ£ö[39m Preparing native dependencies
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+[32mÔ£ö[39m Finalizing package
+[32mÔ£ö[39m Packaging for x64 on win32
+[32mÔ£ö[39m Packaging application
+[33mÔØ»[39m Running postPackage hook
+[32mÔ£ö[39m Running postPackage hook
+[32mÔ£ö[39m Running package command
+[33mÔØ»[39m Running preMake hook
+[32mÔ£ö[39m Running preMake hook
+[33mÔØ»[39m Making distributables
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+(node:22184) [DEP0174] DeprecationWarning: Calling promisify on a function that returns a Promise is likely a mistake.
+[33mÔØ»[39m Making a squirrel distributable for win32/x64
+(node:22184) [DEP0187] DeprecationWarning: Passing invalid argument types to fs.existsSync is deprecated
+[32mÔ£ö[39m Making a squirrel distributable for win32/x64
+[32mÔ£ö[39m Making distributables
+[33mÔØ»[39m Running postMake hook
+ÔÇ║ Artifacts available at: C:\Users\Mohamed\Desktop\UI-TARS-desktop-0.3.0\UI-TARS-desktop-0.3.0\apps\ui-tars\out\make\squirrel.windows\x64
+[32mÔ£ö[39m Running postMake hook
+[?25h

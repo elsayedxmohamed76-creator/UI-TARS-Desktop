@@ -1,0 +1,43 @@
+
+> ui-tars-desktop@0.2.4 build C:\Users\Mohamed\Desktop\UI-TARS-desktop-0.3.0\UI-TARS-desktop-0.3.0\apps\ui-tars
+> npm run clean && npm run typecheck && cross-env NODE_ENV=production electron-vite build && electron-forge make --enable-logging
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 clean
+> rimraf dist out
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck
+> npm run typecheck:node && npm run typecheck:web
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck:node
+> tsc --noEmit -p tsconfig.node.json --pretty --composite false
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck:web
+> tsc --noEmit -p tsconfig.web.json --pretty --composite false
+
+[36mvite v6.2.2 [32mbuilding SSR bundle for production...[36m[39m
+[32mÔ£ô[39m 0 modules transformed.
+[32mÔ£ô[39m 0 bundles compiled into bytecode.
+Ô£ù Build failed in 56ms
+error during build:
+[vite:bytecode] Cannot read properties of undefined (reading 'replace')
+file: C:/Users/Mohamed/Desktop/UI-TARS-desktop-0.3.0/UI-TARS-desktop-0.3.0/apps/ui-tars/src/main/main.ts
+    at escapeRegExpString (file:///C:/Users/Mohamed/Desktop/UI-TARS-desktop-0.3.0/UI-TARS-desktop-0.3.0/node_modules/electron-vite/dist/index.mjs:151:14)
+    at file:///C:/Users/Mohamed/Desktop/UI-TARS-desktop-0.3.0/UI-TARS-desktop-0.3.0/node_modules/electron-vite/dist/index.mjs:191:36
+    at Array.forEach (<anonymous>)
+    at Object.transform (file:///C:/Users/Mohamed/Desktop/UI-TARS-desktop-0.3.0/UI-TARS-desktop-0.3.0/node_modules/electron-vite/dist/index.mjs:190:30)
+    at Object.handler (file:///C:/Users/Mohamed/Desktop/UI-TARS-desktop-0.3.0/UI-TARS-desktop-0.3.0/node_modules/vite/dist/node/chunks/dep-B0fRCRkQ.js:51750:15)
+    at file:///C:/Users/Mohamed/Desktop/UI-TARS-desktop-0.3.0/UI-TARS-desktop-0.3.0/node_modules/rollup/dist/es/shared/node-entry.js:21844:40
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+ÔÇëELIFECYCLEÔÇë Command failed with exit code 1.

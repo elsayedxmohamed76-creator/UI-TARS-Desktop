@@ -1,0 +1,31 @@
+
+> ui-tars-desktop@0.2.4 build C:\Users\Mohamed\Desktop\UI-TARS-desktop-0.3.0\UI-TARS-desktop-0.3.0\apps\ui-tars
+> npm run clean && npm run typecheck && cross-env NODE_ENV=production electron-vite build && electron-forge make --enable-logging
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 clean
+> rimraf dist out
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck
+> npm run typecheck:node && npm run typecheck:web
+
+npm warn Unknown env config "node-linker". This will stop working in the next major version of npm.
+npm warn Unknown env config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> ui-tars-desktop@0.2.4 typecheck:node
+> tsc --noEmit -p tsconfig.node.json --pretty --composite false
+
+[96melectron.vite.config.ts[0m:[93m11[0m:[93m3[0m - [91merror[0m[90m TS6133: [0m'bytecodePlugin' is declared but its value is never read.
+
+[7m11[0m   bytecodePlugin,
+[7m  [0m [91m  ~~~~~~~~~~~~~~[0m
+
+
+Found 1 error in electron.vite.config.ts[90m:11[0m
+
+ÔÇëELIFECYCLEÔÇë Command failed with exit code 2.
