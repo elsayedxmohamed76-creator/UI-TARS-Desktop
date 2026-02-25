@@ -40,9 +40,17 @@ const formSchema = z.object({
     message: 'Please select a VLM Provider to enhance resolution',
   }),
   vlmBaseUrl: z.string().url(),
-  vlmApiKey: z.string().min(1),
+  vlmApiKey: z.string(),
   vlmModelName: z.string().min(1),
   useResponsesApi: z.boolean().default(false),
+}).refine((data) => {
+  if (data.vlmProvider !== VLMProviderV2.ollama && !data.vlmApiKey) {
+    return false;
+  }
+  return true;
+}, {
+  message: "API Key is required for this provider",
+  path: ["vlmApiKey"],
 });
 
 export interface VLMSettingsRef {
@@ -340,13 +348,15 @@ export function VLMSettings({
             name="vlmApiKey"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>VLM API Key</FormLabel>
+                <FormLabel>
+                  VLM API Key {newProvider === VLMProviderV2.ollama && '(Optional)'}
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       className="bg-white"
-                      placeholder="Enter VLM API_Key"
+                      placeholder={newProvider === VLMProviderV2.ollama ? "Enter VLM API_Key (optional for Ollama)" : "Enter VLM API_Key"}
                       {...field}
                       disabled={isRemoteAutoUpdatedPreset}
                     />
@@ -509,11 +519,10 @@ export function ModelAvailabilityCheck({
       onResponseApiSupportChange?.(responseApiSupported);
 
       if (isAvailable) {
-        const successMessage = `Model "${modelName}" is available and working correctly${
-          responseApiSupported
+        const successMessage = `Model "${modelName}" is available and working correctly${responseApiSupported
             ? '. Response API is supported.'
             : '. But Response API is not supported.'
-        }`;
+          }`;
         setCheckState({
           status: 'success',
           message: successMessage,

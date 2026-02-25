@@ -35,8 +35,7 @@ function smartResizeForV15(
 ): [number, number] | null {
   if (Math.max(height, width) / Math.min(height, width) > maxRatio) {
     console.error(
-      `absolute aspect ratio must be smaller than ${maxRatio}, got ${
-        Math.max(height, width) / Math.min(height, width)
+      `absolute aspect ratio must be smaller than ${maxRatio}, got ${Math.max(height, width) / Math.min(height, width)
       }`,
     );
     return null;
@@ -169,13 +168,13 @@ export function parseActionVlm(
     actionStr = actionContent || '';
   }
 
-  // Parse actions
-  const allActions = actionStr.split('\n\n');
+  // Parse actions - be more flexible with newlines (handle both \n and \n\n)
+  const allActions = actionStr.split(/\n+/).filter(a => a.trim() !== '');
   const actions: PredictionParsed[] = [];
 
   for (const rawStr of allActions) {
     // prettier-ignore
-    const actionInstance = parseAction(rawStr.replace(/\n/g, String.raw`\n`).trimStart());
+    const actionInstance = parseAction(rawStr.replace(/\\n/g, String.raw`\n`).trimStart());
     let actionType = '';
     let actionInputs: ActionInputs = {};
 
@@ -225,17 +224,17 @@ export function parseActionVlm(
 
             actionInputs[boxKey] = [x1, y1, x2, y2].every(isNumber)
               ? [
-                  (Math.round(
-                    ((x1 + x2) / 2) * screenContext?.width * widthFactor,
-                  ) /
-                    widthFactor) *
-                    (scaleFactor ?? 1),
-                  (Math.round(
-                    ((y1 + y2) / 2) * screenContext?.height * heightFactor,
-                  ) /
-                    heightFactor) *
-                    (scaleFactor ?? 1),
-                ]
+                (Math.round(
+                  ((x1 + x2) / 2) * screenContext?.width * widthFactor,
+                ) /
+                  widthFactor) *
+                (scaleFactor ?? 1),
+                (Math.round(
+                  ((y1 + y2) / 2) * screenContext?.height * heightFactor,
+                ) /
+                  heightFactor) *
+                (scaleFactor ?? 1),
+              ]
               : [];
           }
         } else {
@@ -260,69 +259,97 @@ export function parseActionVlm(
   return actions;
 }
 /**
- * Parses an action string into a structured object
+ * Parses an action string into a structured object with heuristic fallback
  * @param {string} actionStr - The action string to parse (e.g. "click(start_box='(279,81)')")
  * @returns {Object|null} Parsed action object or null if parsing fails
  */
 function parseAction(actionStr: string) {
   try {
+    // 1. Basic preprocessing
+    actionStr = actionStr.trim();
     // Support format: click(start_box='<|box_start|>(x1,y1)<|box_end|>')
     actionStr = actionStr.replace(/<\|box_start\|>|<\|box_end\|>/g, '');
 
-    // Support format: click(point='<point>510 150</point>') => click(start_box='<point>510 150</point>')
-    // Support format: drag(start_point='<point>458 328</point>', end_point='<point>350 309</point>') => drag(start_box='<point>458 328</point>', end_box='<point>350 309</point>')
+    // Normalize point/start_point/end_point to box format
     actionStr = actionStr
       .replace(/(?<!start_|end_)point=/g, 'start_box=')
       .replace(/start_point=/g, 'start_box=')
       .replace(/end_point=/g, 'end_box=');
 
-    // Match function name and arguments using regex
+    // 2. Try standard function call pattern: func(arg1='val', arg2='val')
     const functionPattern = /^(\w+)\((.*)\)$/;
-    const match = actionStr.trim().match(functionPattern);
+    const match = actionStr.match(functionPattern);
 
-    if (!match) {
-      throw new Error('Not a function call');
-    }
+    if (match) {
+      const [_, functionName, argsStr] = match;
+      const kwargs = {};
 
-    const [_, functionName, argsStr] = match;
+      if (argsStr.trim()) {
+        // Split on commas that aren't inside quotes or parentheses
+        const argPairs = argsStr.match(/([^,']|'[^']*')+/g) || [];
 
-    // Parse keyword arguments
-    const kwargs = {};
+        for (const pair of argPairs) {
+          const splitIdx = pair.indexOf('=');
+          if (splitIdx === -1) continue;
 
-    if (argsStr.trim()) {
-      // Split on commas that aren't inside quotes or parentheses
-      const argPairs = argsStr.match(/([^,']|'[^']*')+/g) || [];
+          const key = pair.substring(0, splitIdx).trim();
+          let value = pair.substring(splitIdx + 1).trim()
+            .replace(/^['"]|['"]$/g, ''); // Remove surrounding quotes
 
-      for (const pair of argPairs) {
-        const [key, ...valueParts] = pair.split('=');
-        if (!key) continue;
+          // Support <bbox> and <point> tags
+          if (value.includes('<bbox>')) {
+            value = value.replace(/<bbox>|<\/bbox>/g, '').replace(/\s+/g, ',');
+            value = `(${value})`;
+          }
+          if (value.includes('<point>')) {
+            value = value.replace(/<point>|<\/point>/g, '').replace(/\s+/g, ',');
+            value = `(${value})`;
+          }
 
-        let value = valueParts
-          .join('=')
-          .trim()
-          .replace(/^['"]|['"]$/g, ''); // Remove surrounding quotes
-
-        // Support format: click(start_box='<bbox>637 964 637 964</bbox>')
-        if (value.includes('<bbox>')) {
-          value = value.replace(/<bbox>|<\/bbox>/g, '').replace(/\s+/g, ',');
-          value = `(${value})`;
+          //@ts-ignore
+          kwargs[key] = value;
         }
-
-        // Support format: click(point='<point>510 150</point>')
-        if (value.includes('<point>')) {
-          value = value.replace(/<point>|<\/point>/g, '').replace(/\s+/g, ',');
-          value = `(${value})`;
-        }
-
-        //@ts-ignore
-        kwargs[key.trim()] = value;
       }
+
+      return {
+        function: functionName,
+        args: kwargs,
+      };
     }
 
-    return {
-      function: functionName,
-      args: kwargs,
-    };
+    // 3. Heuristic Fallback: Try to find coordinates and function name in free text/JSON-like output
+    // This handles local models that might output: click [200, 300] or {"action": "click", "point": [200, 300]}
+
+    // Look for common action keywords
+    const commonActions = ['click', 'type', 'drag', 'scroll', 'wait', 'hover', 'finished', 'call_user'];
+    const lowerStr = actionStr.toLowerCase();
+    const actionFound = commonActions.find(act => lowerStr.includes(act));
+
+    if (actionFound) {
+      // Find coordinates in various formats: (x,y), [x,y], {x,y}
+      const coordMatch = actionStr.match(/[([{]\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)[\])}]/);
+      const kwargs: any = {};
+
+      if (coordMatch) {
+        kwargs['start_box'] = `(${coordMatch[1]},${coordMatch[2]})`;
+      }
+
+      // Handle typing text if action is 'type'
+      if (actionFound === 'type') {
+        const textMatch = actionStr.match(/(?:text|value|input)\s*[:=]\s*['"]?([^'"}]+)['"]?/i) ||
+          actionStr.match(/type\s+['"]?([^'"]+)['"]?/i);
+        if (textMatch) {
+          kwargs['content'] = textMatch[1].trim();
+        }
+      }
+
+      return {
+        function: actionFound,
+        args: kwargs
+      };
+    }
+
+    return null;
   } catch (e) {
     console.error(`Failed to parse action '${actionStr}': ${e}`);
     return null;

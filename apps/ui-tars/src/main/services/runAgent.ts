@@ -21,7 +21,7 @@ import {
 } from '@ui-tars/operator-browser';
 import { showPredictionMarker } from '@main/window/ScreenMarker';
 import { SettingStore } from '@main/store/setting';
-import { AppState, Operator } from '@main/store/types';
+import { AppState, Operator, VLMProviderV2 } from '@main/store/types';
 import { GUIAgentManager } from '../ipcRoutes/agent';
 import { checkBrowserAvailability } from './browserCheck';
 import {
@@ -165,12 +165,22 @@ export const runAgent = async (
   }
 
   let modelVersion = getModelVersion(settings.vlmProvider);
-  let modelConfig: UITarsModelConfig = {
-    baseURL: settings.vlmBaseUrl,
-    apiKey: settings.vlmApiKey,
-    model: settings.vlmModelName,
-    useResponsesApi: settings.useResponsesApi,
-  };
+  let modelConfig: any;
+
+  if (settings.vlmProvider === VLMProviderV2.ollama) {
+    modelConfig = {
+      provider: 'ollama',
+      baseURL: settings.vlmBaseUrl,
+      model: settings.vlmModelName,
+    };
+  } else {
+    modelConfig = {
+      baseURL: settings.vlmBaseUrl,
+      apiKey: settings.vlmApiKey,
+      model: settings.vlmModelName,
+      useResponsesApi: settings.useResponsesApi,
+    } as UITarsModelConfig;
+  }
   let modelAuthHdrs: Record<string, string> = {};
 
   if (

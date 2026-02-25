@@ -1,0 +1,30 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Electron
+  - React
+  - Vite
+  - Tailwind CSS
+  - Zustand
+features:
+  - name: Agent Operations
+    description: Core agent logic for executing natural language tasks on the local system.
+    files:
+      - apps/ui-tars/src/main/services/runAgent.ts
+      - packages/ui-tars/sdk/src/GUIAgent.ts
+    endpoints: []
+  - name: VLM Integration
+    description: Support for various VLM providers, including native Ollama support.
+    files:
+      - packages/ui-tars/sdk/src/OllamaModel.ts
+      - packages/ui-tars/sdk/src/Model.ts
+      - packages/ui-tars/action-parser/src/actionParser.ts
+    endpoints: []
+  - name: UI Action Logging
+    description: Real-time logging of actions executed by the agent for transparency and debugging.
+    files:
+      - apps/ui-tars/src/renderer/src/pages/local/index.tsx
+      - apps/ui-tars/src/main/agent/operator.ts
+    endpoints: []
+known_limitations: []

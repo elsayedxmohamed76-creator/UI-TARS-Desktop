@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 export { GUIAgent } from './GUIAgent';
+export { UITarsModel } from './Model';
+export { OllamaModel } from './OllamaModel';
 export type { GUIAgentConfig } from './types';
 export type { GUIAgentData } from '@ui-tars/shared/types';
 export { StatusEnum } from '@ui-tars/shared/types';

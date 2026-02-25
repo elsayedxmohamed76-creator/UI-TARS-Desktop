@@ -169,18 +169,18 @@ const config: ForgeConfig = {
     executableName: 'UI-TARS',
     ...(enableOsxSign
       ? {
-          osxSign: {
-            keychain: process.env.KEYCHAIN_PATH,
-            optionsForFile: () => ({
-              entitlements: 'build/entitlements.mac.plist',
-            }),
-          },
-          osxNotarize: {
-            appleId: process.env.APPLE_ID!,
-            appleIdPassword: process.env.APPLE_PASSWORD!,
-            teamId: process.env.APPLE_TEAM_ID!,
-          },
-        }
+        osxSign: {
+          keychain: process.env.KEYCHAIN_PATH,
+          optionsForFile: () => ({
+            entitlements: 'build/entitlements.mac.plist',
+          }),
+        },
+        osxNotarize: {
+          appleId: process.env.APPLE_ID!,
+          appleIdPassword: process.env.APPLE_PASSWORD!,
+          teamId: process.env.APPLE_TEAM_ID!,
+        },
+      }
       : {}),
   },
   rebuildConfig: {},
@@ -188,7 +188,7 @@ const config: ForgeConfig = {
     {
       name: '@electron-forge/publisher-github',
       config: {
-        repository: { owner: 'bytedance', name: 'ui-tars-desktop' },
+        repository: { owner: 'elsayedxmohamed76-creator', name: 'UI-TARS-desktop-0.3.0-clean' },
         draft: true,
         force: true,
         generateReleaseNotes: true,
@@ -224,16 +224,16 @@ const config: ForgeConfig = {
     ...(process.env.CI === 'e2e'
       ? []
       : [
-          new FusesPlugin({
-            version: FuseVersion.V1,
-            [FuseV1Options.RunAsNode]: false,
-            [FuseV1Options.EnableCookieEncryption]: true,
-            [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
-            [FuseV1Options.EnableNodeCliInspectArguments]: false,
-            [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
-            [FuseV1Options.OnlyLoadAppFromAsar]: true,
-          }),
-        ]),
+        new FusesPlugin({
+          version: FuseVersion.V1,
+          [FuseV1Options.RunAsNode]: false,
+          [FuseV1Options.EnableCookieEncryption]: true,
+          [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
+          [FuseV1Options.EnableNodeCliInspectArguments]: false,
+          [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
+          [FuseV1Options.OnlyLoadAppFromAsar]: true,
+        }),
+      ]),
   ],
   hooks: {
     postMake: async (forgeConfig, makeResults) => {

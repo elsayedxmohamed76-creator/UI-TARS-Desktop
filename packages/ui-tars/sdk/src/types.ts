@@ -14,6 +14,7 @@ import {
 
 import { BaseOperator, BaseModel } from './base';
 import { UITarsModel } from './Model';
+import { OllamaModel, OllamaModelConfig } from './OllamaModel';
 import { Factors } from './constants';
 
 export interface ExecuteParams {
@@ -31,7 +32,7 @@ export interface ExecuteParams {
 
 export type ExecuteOutput = { status: StatusEnum } & (object | void);
 
-export interface ScreenshotOutput extends ScreenshotResult {}
+export interface ScreenshotOutput extends ScreenshotResult { }
 
 export interface InvokeParams {
   conversations: Message[];
@@ -73,6 +74,9 @@ export abstract class Operator extends BaseOperator {
 }
 
 export abstract class Model extends BaseModel<InvokeParams, InvokeOutput> {
+  abstract get factors(): [number, number];
+  abstract get modelName(): string;
+  abstract reset(): void;
   abstract invoke(params: InvokeParams): Promise<InvokeOutput>;
 }
 
@@ -86,8 +90,9 @@ export interface RetryConfig {
 export interface GUIAgentConfig<TOperator> {
   operator: TOperator;
   model:
-    | InstanceType<typeof UITarsModel>
-    | ConstructorParameters<typeof UITarsModel>[0];
+  | InstanceType<typeof Model>
+  | ConstructorParameters<typeof UITarsModel>[0]
+  | (OllamaModelConfig & { provider: 'ollama' });
 
   // ===== Optional =====
   systemPrompt?: string;
@@ -112,5 +117,5 @@ export interface AgentContext<T = Operator> extends GUIAgentConfig<T> {
   logger: NonNullable<GUIAgentConfig<T>['logger']>;
   /** [widthFactor, heightFactor] */
   factors: [number, number];
-  model: InstanceType<typeof UITarsModel>;
+  model: InstanceType<typeof Model>;
 }

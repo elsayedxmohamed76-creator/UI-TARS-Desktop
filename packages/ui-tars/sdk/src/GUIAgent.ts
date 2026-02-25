@@ -19,8 +19,9 @@ import { Jimp } from 'jimp';
 import { v4 as uuidv4 } from 'uuid';
 
 import { setContext } from './context/useContext';
-import { Operator, GUIAgentConfig, InvokeParams } from './types';
+import { Operator, GUIAgentConfig, InvokeParams, Model } from './types';
 import { UITarsModel } from './Model';
+import { OllamaModel } from './OllamaModel';
 import { BaseGUIAgent } from './base';
 import {
   getSummary,
@@ -40,7 +41,7 @@ export class GUIAgent<T extends Operator> extends BaseGUIAgent<
   GUIAgentConfig<T>
 > {
   private readonly operator: T;
-  private readonly model: InstanceType<typeof UITarsModel>;
+  private readonly model: InstanceType<typeof Model>;
   private readonly logger: NonNullable<GUIAgentConfig<T>['logger']>;
   private uiTarsVersion?: UITarsModelVersion;
   private systemPrompt: string;
@@ -55,9 +56,11 @@ export class GUIAgent<T extends Operator> extends BaseGUIAgent<
     this.operator = config.operator;
 
     this.model =
-      config.model instanceof UITarsModel
+      config.model instanceof Model
         ? config.model
-        : new UITarsModel(config.model);
+        : 'provider' in config.model && config.model.provider === 'ollama'
+          ? new OllamaModel(config.model)
+          : new UITarsModel(config.model as any);
     this.logger = config.logger || console;
     this.uiTarsVersion = config.uiTarsVersion;
     this.systemPrompt = config.systemPrompt || this.buildSystemPrompt();
@@ -519,9 +522,9 @@ export class GUIAgent<T extends Operator> extends BaseGUIAgent<
     return actionSpaces == null || actionSpaces.length === 0
       ? SYSTEM_PROMPT
       : SYSTEM_PROMPT_TEMPLATE.replace(
-          '{{action_spaces_holder}}',
-          actionSpaces.join('\n'),
-        );
+        '{{action_spaces_holder}}',
+        actionSpaces.join('\n'),
+      );
   }
 
   private guiAgentErrorParser(

@@ -13,6 +13,7 @@ import { Button } from '@renderer/components/ui/button';
 import { SidebarTrigger, useSidebar } from '@renderer/components/ui/sidebar';
 import { NavHeader } from '@renderer/components/Detail/NavHeader';
 import { ScrollArea } from '@renderer/components/ui/scroll-area';
+import { Trash2 } from 'lucide-react';
 
 import { useStore } from '@renderer/hooks/useStore';
 import { useSession } from '@renderer/hooks/useSession';
@@ -51,7 +52,7 @@ const LocalOperator = () => {
   const navigate = useNavigate();
   const { setOpen } = useSidebar();
 
-  const { status, messages = [], thinking, errorMsg } = useStore();
+  const { status, messages = [], thinking, errorMsg, actionLogs = [] } = useStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const suggestions: string[] = [];
   const [selectImg, setSelectImg] = useState<number | undefined>(undefined);
@@ -212,6 +213,10 @@ const LocalOperator = () => {
     }
   };
 
+  const clearLogs = () => {
+    window.zustandBridge.setState({ actionLogs: [] });
+  };
+
   const renderChatList = () => {
     return (
       <ScrollArea className="h-full px-4">
@@ -297,14 +302,39 @@ const LocalOperator = () => {
         </Card>
         <Card className="flex-1 basis-3/5 p-3 h-[calc(100vh-76px)]">
           <Tabs defaultValue="screenshot" className="flex-1">
-            <TabsList>
+            <TabsList className="w-full justify-start">
               <TabsTrigger value="screenshot">ScreenShot</TabsTrigger>
+              <TabsTrigger value="logs">Action Logs</TabsTrigger>
             </TabsList>
             <TabsContent value="screenshot">
               <ImageGallery
                 messages={chatMessages}
                 selectImgIndex={selectImg}
               />
+            </TabsContent>
+            <TabsContent value="logs" className="h-[calc(100%-40px)]">
+              <div className="flex flex-col h-full">
+                <div className="flex justify-between items-center mb-2 px-1">
+                  <span className="text-xs text-muted-foreground">{actionLogs.length} actions logged</span>
+                  <Button variant="ghost" size="sm" onClick={clearLogs} className="h-7 text-xs text-destructive">
+                    <Trash2 className="h-3 w-3 mr-1" />
+                    Clear Logs
+                  </Button>
+                </div>
+                <ScrollArea className="flex-1 rounded-md border bg-slate-50 dark:bg-slate-900 p-2">
+                  <div className="space-y-1">
+                    {actionLogs.length === 0 ? (
+                      <div className="text-center py-10 text-muted-foreground text-sm">No actions recorded yet</div>
+                    ) : (
+                      actionLogs.map((log: string, i: number) => (
+                        <div key={i} className="font-mono text-[10px] whitespace-pre-wrap py-1 border-b border-slate-200 dark:border-slate-800 last:border-0">
+                          {log}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
             </TabsContent>
           </Tabs>
         </Card>

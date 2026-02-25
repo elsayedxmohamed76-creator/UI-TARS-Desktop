@@ -30,6 +30,7 @@ import { registerSettingsHandlers } from './services/settings';
 import { sanitizeState } from './utils/sanitizeState';
 import { windowManager } from './services/windowManager';
 import { checkBrowserAvailability } from './services/browserCheck';
+import { AppUpdater } from './utils/updateApp';
 
 const { isProd } = env;
 
@@ -97,6 +98,9 @@ const initializeApp = async () => {
 
   logger.info('createMainWindow');
   let mainWindow = createMainWindow();
+
+  // Initialize auto-updater
+  new AppUpdater(mainWindow);
 
   session.defaultSession.setDisplayMediaRequestHandler(
     (_request, callback) => {

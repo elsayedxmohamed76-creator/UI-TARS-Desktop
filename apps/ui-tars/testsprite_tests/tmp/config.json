@@ -1,0 +1,9 @@
+{
+  "status": "commited",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "backendAuthType": "API key",
+  "backendApiKey": "f",
+  "backendApiValue": "sk-user-5oj0XcsUwhQ64u58wHW07eMZuq0f5aibzjlQ3wp3DFOK1y7WGQp4Ej40DCp3OUD0ieiLdJdWJurvFUaw5TRHV4QuJE0gNaNL_xPT2gfnKOuBagRTbWvsRR5I6wXDCYFFdxM"
+}
