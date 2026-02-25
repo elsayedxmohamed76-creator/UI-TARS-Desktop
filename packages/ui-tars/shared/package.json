@@ -1,6 +1,6 @@
 {
   "name": "@ui-tars/shared",
-  "version": "1.2.3",
+  "version": "3.0.0",
   "description": "Shared types for UI-TARS",
   "repository": {
     "type": "git",

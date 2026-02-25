@@ -3,4 +3,4 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 export const REPO_OWNER = 'elsayedxmohamed76-creator';
-export const REPO_NAME = 'UI-TARS-desktop-0.3.0-clean';
+export const REPO_NAME = 'UI-TARS-Desktop';

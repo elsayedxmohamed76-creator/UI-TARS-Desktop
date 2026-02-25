@@ -1,6 +1,6 @@
 {
   "name": "gui-agent-example",
-  "version": "0.0.1",
+  "version": "3.0.0",
   "description": "Example for GUI Agent SDK",
   "main": "dist/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "mcp-server-{{name}}",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "mcpName": "io.github.username/mcp-server-{{name}}",
   "description": "An MCP server for {{name}}",
   "type": "module",

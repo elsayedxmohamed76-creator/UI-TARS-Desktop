@@ -1,7 +1,7 @@
 {
   "name": "@ui-tars/visualizer",
   "description": "Visualizer for Computer Use forked from @midscene/visualizer",
-  "version": "1.1.0",
+  "version": "3.0.0",
   "repository": "https://github.com/bytedance/UI-TARS-desktop",
   "homepage": "https://github.com/bytedance/UI-TARS-desktop/tree/main/packages/visualizer",
   "types": "./dist/types/index.d.ts",

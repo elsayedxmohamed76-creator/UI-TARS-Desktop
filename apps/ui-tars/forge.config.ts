@@ -188,7 +188,7 @@ const config: ForgeConfig = {
     {
       name: '@electron-forge/publisher-github',
       config: {
-        repository: { owner: 'elsayedxmohamed76-creator', name: 'UI-TARS-desktop-0.3.0-clean' },
+        repository: { owner: 'elsayedxmohamed76-creator', name: 'UI-TARS-Desktop' },
         draft: true,
         force: true,
         generateReleaseNotes: true,
@@ -201,6 +201,7 @@ const config: ForgeConfig = {
       // CamelCase version without spaces
       name: 'UiTars',
       setupIcon: 'resources/icon.ico',
+      setupExe: 'UI-TARS-Setup.exe',
     }),
     // https://github.com/electron/forge/issues/3712
     new MakerDMG({
